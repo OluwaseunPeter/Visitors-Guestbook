@@ -1,0 +1,102 @@
+{% extends 'visitors_guestbook/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="panel-body marginleft20 marginright20">
+                <h1>Visitors History</h1>
+                <hr/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-sm-3" >
+                            <a  href="#" class="text-center">
+                                <h3>{{ total_visit_today }}</h3>
+                                <p>VISIT TODAY</p>
+                            </a>
+                        </div>
+                        <div class="col-sm-3" >
+                            <a  href="#" class="text-center">
+                                <h3>{{ total_visit_for_this_week }}</h3>
+                                <p>VISIT THIS WEEK</p>
+                            </a>
+                        </div>
+                         <div class="col-sm-3" >
+                            <a  href="#" class="text-center">
+                                <h3>{{ total_vist_for_this_month }}</h3>
+                                <p>VISIT THIS MONTH</p>
+                            </a>
+                        </div>
+                        <div class="col-sm-3" >
+                            <a  href="#" class="text-center">
+                                <h3>{{ total_vist }}</h3>
+                                <p>TOTAL VISIT</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="panel-body marginleft20 marginright20">
+
+                <div class="box-body marginbottom10 margintop20">
+                <h3 class="box-title">List of Visits</h3>
+                    <div class="table-responsive">
+                        <table id="visits" class="table table-striped table-bordered">
+                            <!--<caption>Table caption</caption>-->
+                            <thead>
+                            <th class="left">SN</th>
+                            <th class="left">Visitor Name</th>
+                            <th class="left">Visitor Email</th>
+                            <th class="left">Visitor Address</th>
+                            <th class="left">To See</th>
+                            <th class="left">Purpose</th>
+                            <th class="left">Date</th>
+                            </thead>
+                            <tbody>
+                            {% for visit in visit_history %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{visit.visitor.name}}</td>
+                                        <td><a target="_blank" href="{% url 'visitors_guestbook:report_visitor' visit.visitor.id %}">{{visit.visitor.email}}</a></td>
+                                        <td>{{visit.visitor.address}}</td>
+                                        <td>{{visit.to_see}}</td>
+                                        <td>{{visit.visit_purpose}}</td>
+                                        <td>{{visit.check_in_date}}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <th class="left">SN</th>
+                            <th class="left">Visitor Name</th>
+                            <th class="left">Visitor Email</th>
+                            <th class="left">Visitor Address</th>
+                            <th class="left">To See</th>
+                            <th class="left">Purpose</th>
+                            <th class="left">Date</th>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer clearfix"></div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script type="text/javascript">
+    $(document).ready(function() {
+    // DataTable
+        var table = $('#visits').DataTable()
+    });
+</script>
+{% endblock script %}

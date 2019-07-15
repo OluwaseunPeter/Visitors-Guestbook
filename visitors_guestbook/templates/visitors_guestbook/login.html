@@ -1,0 +1,53 @@
+{% extends 'visitors_guestbook/base.html' %}
+
+{% block content %}
+<div >
+<h1>Admin Login</h1>
+<hr/>
+<form id="login_form" action="" method="post">
+    {% csrf_token %}
+    
+    {% for hidden in form.hidden_fields %} 
+        {{ hidden }}
+    {% endfor %}
+
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{ form.non_field_errors }}
+    </div>
+    {% endif %}
+    
+
+    
+    {% for field in form.visible_fields %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ field.label_tag }} 
+                {{ field }}
+                {{ field.errors }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+  
+
+    <button type="submit" value="Submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#login_form').find("input, select, textarea").each(function(index, element) {
+            $(element).addClass("form-control");
+        });
+
+        $('#login_form').find("label").each(function(index, element) {
+            $(element).addClass("control-label");
+        });
+    });
+    </script>
+{% endblock script %}
